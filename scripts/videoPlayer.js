@@ -6,7 +6,9 @@ export const videoPlayerInit = () => {
       videoButtonStop = document.querySelector('.video-button__stop'),
       videoTimePassed = document.querySelector('.video-time__passed'),
       videoProgress = document.querySelector('.video-progress'),
-      videoTimeTotal = document.querySelector('.video-time__total');
+      videoTimeTotal = document.querySelector('.video-time__total'),
+      videoVolume = document.querySelector('.video-volume'),
+      videoFullscreen = document.querySelector('.video-fullscreen');
 
    // Функция смены иконки плэй/пауза
    const toggleIcon = () => {
@@ -20,7 +22,8 @@ export const videoPlayerInit = () => {
    }
 
    // Фуекция запуска видео
-   const togglePlay = () => {
+   const togglePlay = event => {
+      event.preventDefault();
       if (videoPlayer.paused) {
          videoPlayer.play();
       } else {
@@ -36,6 +39,12 @@ export const videoPlayerInit = () => {
 
    // Функция прибавление "ноль" к цыфрам меньше "10"
    const addZero = n => n < 10 ? '0' + n : n;
+
+   // Функция регулировки громкости
+   const changeVolume = () => {
+      const valueVolume = videoVolume.value;
+      videoPlayer.volume = valueVolume / 100;
+   }
 
    // Навешиваем обработчик события
    videoPlayer.addEventListener('click', togglePlay);
@@ -64,10 +73,25 @@ export const videoPlayerInit = () => {
    });
 
    // Событие изменения прогресса видео "клик в прогресс ленте"
-   videoProgress.addEventListener('change', () => {
+   videoProgress.addEventListener('input', () => {
       const durationTime = videoPlayer.duration; // Общее время видео
       const value = videoProgress.value; // Значение при изменении прогрес видео - клик на прогресс ленте
 
       videoPlayer.currentTime = (value * durationTime) / 100; //Устанавливаем время видео на то месо где был клик в прогресс ленте
    });
+
+   // Событие изменения уровня громкости
+   videoVolume.addEventListener('input', changeVolume);
+
+   //Открывание видео на весь экран
+   videoFullscreen.addEventListener('click', () => {
+      videoPlayer.requestFullscreen();
+   });
+
+   videoPlayer.addEventListener('volumechange', () => {
+      videoVolume.value = Math.round(videoPlayer.volume * 100);
+   });
+
+   //Вызов функции регулировки громкости
+   changeVolume();
 }
