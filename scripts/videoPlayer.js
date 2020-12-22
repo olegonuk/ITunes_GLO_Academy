@@ -88,6 +88,7 @@ export const videoPlayerInit = () => {
       videoPlayer.requestFullscreen();
    });
 
+   //Регулировка громкости в режиме fullScreen
    videoPlayer.addEventListener('volumechange', () => {
       videoVolume.value = Math.round(videoPlayer.volume * 100);
    });
