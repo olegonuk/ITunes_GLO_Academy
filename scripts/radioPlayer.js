@@ -26,11 +26,13 @@ export const radioPlayerInit = () => {
          radioStop.classList.remove('fa-play');
       }
    }
+
    //Функция выбора радиостпнции
    const selectItem = elem => {
       radioItem.forEach(item => item.classList.remove('select'));
       elem.classList.add('select');
    }
+
    //Обработчик события на переключение между радиостанциями
    radioNavigation.addEventListener('change', event => {
       const target = event.target;
@@ -51,6 +53,7 @@ export const radioPlayerInit = () => {
       changeIconPlay();
    });
 
+   //Событие по клику остановка/запуск радиосанции
    radioStop.addEventListener('click', () => {
       if (audio.paused) {
          audio.play();
@@ -59,12 +62,4 @@ export const radioPlayerInit = () => {
       }
       changeIconPlay();
    });
-
-
-
-
-
-
-
-
 }
