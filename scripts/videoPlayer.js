@@ -8,7 +8,8 @@ export const videoPlayerInit = () => {
       videoProgress = document.querySelector('.video-progress'),
       videoTimeTotal = document.querySelector('.video-time__total'),
       videoVolume = document.querySelector('.video-volume'),
-      videoFullscreen = document.querySelector('.video-fullscreen');
+      videoFullscreen = document.querySelector('.video-fullscreen'),
+      volumeOff = document.querySelector('.fa-volume-off');
 
    // Функция смены иконки плэй/пауза
    const toggleIcon = () => {
@@ -91,6 +92,15 @@ export const videoPlayerInit = () => {
    //Регулировка громкости в режиме fullScreen
    videoPlayer.addEventListener('volumechange', () => {
       videoVolume.value = Math.round(videoPlayer.volume * 100);
+   });
+
+   //Выключение звука
+   volumeOff.addEventListener('click', () => {
+      if (videoVolume.value > 0) {
+         videoPlayer.volume = 0;
+      } else {
+         videoPlayer.volume = 0.5;
+      }
    });
 
    //Вызов функции регулировки громкости
