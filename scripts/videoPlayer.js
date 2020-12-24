@@ -1,3 +1,5 @@
+import { addZero } from './supScript.js';
+
 export const videoPlayerInit = () => {
 
    //Объявление переменных
@@ -38,11 +40,8 @@ export const videoPlayerInit = () => {
       videoPlayer.currentTime = 0; // Сброс время видео
    }
 
-   // Функция прибавление "ноль" к цыфрам меньше "10"
-   const addZero = n => n < 10 ? '0' + n : n;
-
    // Функция регулировки громкости 
-   let levelVolume;//Переменна для сохранения изменения уровня громкости
+   let levelVolume = videoVolume.value;//Переменна для сохранения изменения уровня громкости
    const changeVolume = () => {
       const valueVolume = videoVolume.value;
       videoPlayer.volume = valueVolume / 100;
@@ -119,4 +118,10 @@ export const videoPlayerInit = () => {
 
    //Вызов функции регулировки громкости
    changeVolume();
+
+   //Остановка видео при переключении табов
+   videoPlayerInit.stop = () => {
+      videoPlayer.pause();
+      toggleIcon();
+   }
 }

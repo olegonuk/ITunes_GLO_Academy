@@ -66,7 +66,7 @@ export const radioPlayerInit = () => {
    });
 
    // Функция регулировки громкости
-   let prevVolume;//Переменна для сохранения изменения уровня громкости
+   let prevVolume = radioVolume.value;//Переменна для сохранения изменения уровня громкости
    const changeVolumeRadio = () => {
       const radioVol = radioVolume.value;
       audio.volume = radioVol / 100;
@@ -76,6 +76,7 @@ export const radioPlayerInit = () => {
    //Событие регулировки громкости
    radioVolume.addEventListener('input', changeVolumeRadio);
 
+   //Отключение громкости по клику
    radioMute.addEventListener('click', () => {
 
       if (audio.muted) {
@@ -89,4 +90,9 @@ export const radioPlayerInit = () => {
    radioVolume.value = audio.volume * 100;
    changeVolumeRadio();
 
+   //Остановка радио при переключении табов
+   radioPlayerInit.stop = () => {
+      audio.pause();
+      changeIconPlay();
+   }
 }
