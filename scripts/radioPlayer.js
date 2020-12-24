@@ -6,7 +6,9 @@ export const radioPlayerInit = () => {
       radioNavigation = document.querySelector('.radio-navigation'),
       radioHeaderBig = document.querySelector('.radio-header__big'),
       radioItem = document.querySelectorAll('.radio-item'),
-      radioStop = document.querySelector('.radio-stop');
+      radioStop = document.querySelector('.radio-stop'),
+      radioVolume = document.querySelector('.radio-volume'),
+      radioMute = document.querySelector('.radio-mute');
 
    //Создание объекта Аудио
    const audio = new Audio();
@@ -62,4 +64,29 @@ export const radioPlayerInit = () => {
       }
       changeIconPlay();
    });
+
+   // Функция регулировки громкости
+   let prevVolume;//Переменна для сохранения изменения уровня громкости
+   const changeVolumeRadio = () => {
+      const radioVol = radioVolume.value;
+      audio.volume = radioVol / 100;
+      prevVolume = audio.volume * 100;// Сохраняем изменения уровня громкости в глобальную переменную
+   }
+
+   //Событие регулировки громкости
+   radioVolume.addEventListener('input', changeVolumeRadio);
+
+   radioMute.addEventListener('click', () => {
+
+      if (audio.muted) {
+         radioVolume.value = `${prevVolume}`;//Возвращяем уровень громкости до отключения
+         audio.muted = false;
+      } else {
+         audio.muted = true;
+         radioVolume.value = 0;
+      }
+   });
+   radioVolume.value = audio.volume * 100;
+   changeVolumeRadio();
+
 }

@@ -91,6 +91,15 @@ export const videoPlayerInit = () => {
       videoPlayer.requestFullscreen();
    });
 
+   // Событие добавления панели управления видео в FireFox
+   videoPlayer.addEventListener('fullscreenchange', () => {
+      if (document.fullscreen) {
+         videoPlayer.controls = true;
+      } else {
+         videoPlayer.controls = false;
+      }
+   });
+
    //Регулировка громкости в режиме fullScreen
    videoPlayer.addEventListener('volumechange', () => {
       videoVolume.value = Math.round(videoPlayer.volume * 100);
