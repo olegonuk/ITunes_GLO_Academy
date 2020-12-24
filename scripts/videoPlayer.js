@@ -22,7 +22,7 @@ export const videoPlayerInit = () => {
       }
    }
 
-   // Фуекция запуска видео
+   // Функция запуска видео
    const togglePlay = event => {
       event.preventDefault();
       if (videoPlayer.paused) {
@@ -41,10 +41,12 @@ export const videoPlayerInit = () => {
    // Функция прибавление "ноль" к цыфрам меньше "10"
    const addZero = n => n < 10 ? '0' + n : n;
 
-   // Функция регулировки громкости
+   // Функция регулировки громкости 
+   let levelVolume;//Переменна для сохранения изменения уровня громкости
    const changeVolume = () => {
       const valueVolume = videoVolume.value;
       videoPlayer.volume = valueVolume / 100;
+      levelVolume = videoPlayer.volume;// Сохраняем изменения уровня громкости в глобальную переменную
    }
 
    // Навешиваем обработчик события
@@ -96,10 +98,13 @@ export const videoPlayerInit = () => {
 
    //Выключение звука
    volumeOff.addEventListener('click', () => {
-      if (videoVolume.value > 0) {
-         videoPlayer.volume = 0;
+
+      if (videoPlayer.muted) {
+         videoPlayer.volume = `${levelVolume}`; //Возвращяем уровень громкости до отключения
+         videoPlayer.muted = false;
       } else {
-         videoPlayer.volume = 0.5;
+         videoPlayer.muted = true;
+         videoPlayer.volume = 0;
       }
    });
 
